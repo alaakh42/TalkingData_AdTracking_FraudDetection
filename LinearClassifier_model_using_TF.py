@@ -20,17 +20,12 @@ tf.logging.set_verbosity(tf.logging.ERROR)
 pd.options.display.max_rows = 10
 pd.options.display.float_format = '{:.1f}'.format
 
-# california_housing_dataframe = pd.read_csv("https://storage.googleapis.com/ml_universities/california_housing_train.csv", sep=",")
-
-# california_housing_dataframe = california_housing_dataframe.reindex(
-#     np.random.permutation(california_housing_dataframe.index))
+## Import Data
 path = 'data/talkingdata-adtracking-fraud-detection/'
 train_df = pd.read_csv(path + 'train_sample.csv') 
 
 train_df = train_df.reindex(
     np.random.permutation(train_df.index))
-# california_housing_dataframe.columns
-
 
 ## Feature Engineering
 
@@ -54,7 +49,6 @@ def preprocess_features(train_df):
      "click_time"
      ]]
   processed_features = selected_features.copy()
-  # Create a synthetic feature
 
   return processed_features
 
@@ -76,7 +70,7 @@ def preprocess_targets(train_df):
 training_examples = preprocess_features(train_df.head(70000))
 training_targets = preprocess_targets(train_df.head(70000))
 
-# Choose the last 30000 (out of 17000) examples for validation.
+# Choose the last 30000 (out of 30000) examples for validation.
 validation_examples = preprocess_features(train_df.tail(30000))
 validation_targets = preprocess_targets(train_df.tail(30000))
 
@@ -94,7 +88,8 @@ display.display(validation_targets.describe())
 ## Feature Scaling, Feature crosses, etc..
 
 def construct_feature_columns(input_features_num=None, input_features_cat=None,
-                              feature_type=['numerical','cat_with_identy','cat_with_hash_bucket','cat_with_vocab_file','cat_with_vocab_list']):
+                              feature_type=['numerical','cat_with_identy','cat_with_hash_bucket',
+					    'cat_with_vocab_file','cat_with_vocab_list']):
   """Construct the TensorFlow Feature Columns.
 
   Args:
@@ -185,6 +180,8 @@ def construct_feature_columns():
   
   return feature_columns
 
+## Feature Normalization
+
 def linear_scale(series):
   min_val = series.min()
   max_val = series.max()
@@ -205,8 +202,7 @@ def log_normalize(series):
   return series.apply(lambda x:math.log(abs(x+1.0)))
 
 def clip(series, clip_to_min, clip_to_max):
-  return series.apply(lambda x:(
-    min(max(x, clip_to_min), clip_to_max)))
+  return series.apply(lambda x:(min(max(x, clip_to_min), clip_to_max)))
 
 def z_score_normalize(series):
   mean = series.mean()
@@ -377,13 +373,13 @@ def train_linear_classifier_model(
 
 
 linear_classifier = train_linear_classifier_model(
-												learning_rate=0.000005,
-												steps=500,
-												batch_size=20,
-												training_examples=training_examples,
-												training_targets=training_targets,
-												validation_examples=validation_examples,
-												validation_targets=validation_targets)
+						  learning_rate=0.000005,
+						  steps=500,
+						  batch_size=20,
+						  training_examples=training_examples,
+						  training_targets=training_targets,
+						  validation_examples=validation_examples,
+						  validation_targets=validation_targets)
 
 evaluation_metrics = linear_classifier.evaluate(input_fn=predict_validation_input_fn)
 
