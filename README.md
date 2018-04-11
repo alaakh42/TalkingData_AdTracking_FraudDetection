@@ -3,7 +3,8 @@ A kaggle competition to predict whether a user will download an app after clicki
   You can download the data from the competion [page](https://www.kaggle.com/c/talkingdata-adtracking-fraud-detection/data)
 I built an XGBoost model that is fitted in a numerical encoded data, The model was trained using ```55000000``` records of the train dataset.
 
-It took time between 25:45 minutes (According to Data Size) as the algorithm implementation is very robust even with very large datatest. 
+It took time between 25:45 minutes (it changes according to Data Size) on a 16GB and 8 cores machine.
+  The algorithm implementation is very robust even with very large datatest. 
 
 After some excessive hyperparameters tuning, I got AUC of 0.9638 ln the public Leaderboard
 
