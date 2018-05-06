@@ -9,7 +9,7 @@ It took time between 25:45 minutes (it changes according to Data Size) on a 16GB
 After some excessive hyperparameters tuning, I got AUC of 0.9638 ln the public Leaderboard
 
 The Model Predictions (My 2 Top score Submissions):
-- The submission file in this Google Drive [link](https://drive.google.com/drive/u/0/folders/0B70KdP1JxlcTVkVZNG9OOWxleTQ)
+- The submission file in this Google Drive [link](https://drive.google.com/open?id=1eIZhyslIta25YjRRQVjM76CHQm9BkLRu)
 
 LightGBM model has too many hyperparameters and those needs carefull tuning, the best way to do that is using Grid Search Optimization 
 
